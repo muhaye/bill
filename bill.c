@@ -8,13 +8,14 @@
 #include <stdlib.h>    /* for exit */
 #include <getopt.h>
 
+#include "init.h"
+
 #define MAX_LEN 80
 
 // Header -- Section
 int addClient(); 
 
 // Implementation -- Section
-
 int main(int argc, char **argv) {
   int c;
   int digit_optind = 0;
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
     int option_index = 0;
     static struct option long_options[] = {
       {"add",     required_argument, 0,  0 },
-      {"append",  no_argument,       0,  0 },
+      {"init",    no_argument,       0, 'i'},
       {"delete",  required_argument, 0,  0 },
       {"verbose", no_argument,       0,  0 },
       {"create",  required_argument, 0, 'c'},
@@ -44,7 +45,10 @@ int main(int argc, char **argv) {
           printf(" with arg %s", optarg);
         printf("\n");
         break;
-
+      case 'i':
+	// Create working directory if it does not exits	
+	init_working_dir();
+	break;
       case '0':
       case '1':
       case '2':
@@ -91,7 +95,7 @@ int main(int argc, char **argv) {
 int addClient() {
 
   char a_client[MAX_LEN];
-  printf("Please enter client Name ex:(Candy inc.):\n"); 
+  printf("Please enter client Name ex:\(Candy inc.):\n"); 
   scanf("%99[^\n]", a_client);
   printf("You entered: %s\n", a_client); 
   return 0; 
